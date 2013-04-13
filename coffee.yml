@@ -1,0 +1,61 @@
+---
+BBEditDocumentType: CodelessLanguageModule
+BBLMLanguageCode       : CoSc              # must be 4 chars
+BBLMLanguageDisplayName: CoffeeScript
+BBLMSuffixMap      : ['.coffee']
+BBLMColorsSyntax   : true
+BBLMIsCaseSensitive: true
+BBLMScansFunctions : true
+BBLMKeywordList:
+  - 'if'
+  - 'for'
+  - 'in'
+  - 'then'
+  - 'else'
+  - 'or'
+  - 'of'
+  - 'while'
+  - 'until'
+  - 'do'
+  - 'try'
+  - 'catch'
+  - 'is'
+  - 'isnt'
+  - 'unless'
+  - 'and'
+  - 'not'
+  - 'class'
+  - 'extends'
+  - 'super'
+  - 'new'
+  - 'this'
+  - 'switch'
+  - 'when'
+  - 'finally'
+  - 'typeof'
+  - '->'
+  - '=>'
+BBLMPredefinedNameList:
+  - 'true'
+  - 'false'
+  - 'null'
+  - '@'
+BBLMCommentLineDefault: '#'
+Language Features:
+  Comment Pattern: |
+    (?x:
+    	(\#.*?$) |
+    	(?s:^\s*\#\#\#.+?\s*\#\#\#)
+    )
+  Identifier and Keyword Character Class: a-zA-Z0-9_@-=>?
+  String Pattern: |
+    (?x:
+        ("(\\"|[^"\r]|\\\r)*") |  (?# Double-quote)
+        ('(\\'|[^'\r]|\\\r)*') |  (?# Single-quote)
+        (?s:                      (?# Here-document)
+        	<<-?(?P<delim>\w+)
+        	.*?
+        	(?P=delim)
+        )
+    )
+  Function Pattern: '(?sx:^\s*(?P<function>(?P<function_name>[a-zA-Z0-9_@]+)\W*(=|:)\W*(\([a-zA-Z0-9_, ]+\))?\W*(\-\>|\=\>)\W*))'
