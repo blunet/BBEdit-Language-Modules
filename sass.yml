@@ -328,8 +328,8 @@ Language Features:
     (?x:
     	(?P<function>
     		(?P<leadspace>^[ \t]*)
-    		@mixin[ \t]+ 
-    		(?P<function_name>[a-zA-Z_][a-zA-Z0-9_-]+)[ \t]*
+    		(\#|\.|\+|=|(@mixin|@include)[ \t]+)
+    		(?P<function_name>[a-zA-Z_][a-zA-Z0-9_-]+)(\([(]+\))?[ \t]*
     		(
     			\n(?P=leadspace)(?P<innerspace>[ \t]+).+
     			(\n(?P=leadspace)(?P=innerspace).+)*
