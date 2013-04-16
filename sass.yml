@@ -7,7 +7,7 @@ BBLMColorsSyntax   : true
 BBLMIsCaseSensitive: true
 BBLMScansFunctions : true
 BBLMSupportsTextCompletion: true
-BBLMIsSourceKind   : true
+BBLMCommentLineDefault: '//'
 BBLMKeywordList:
   - 'a'
   - 'abbr'
@@ -242,7 +242,6 @@ BBLMKeywordList:
 BBLMPredefinedNameList:
   - background-attachment
   - background-color
-  - background-color
   - background-image
   - background-position
   - background-repeat
@@ -271,13 +270,9 @@ BBLMPredefinedNameList:
   - bottom
   - clear
   - color
-  - color
   - direction
   - display
   - float
-  - font-family
-  - font-family
-  - font-family
   - font-family
   - font-size
   - font-style

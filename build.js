@@ -9,9 +9,9 @@ var yaml = require('js-yaml')
 var i = 0
 function line(s) { return Array(i+1).join('  ') + s + '\n' }
 function key(k) { return line('<key>' + k + '</key>') }
-function str(v) { return line('<string>' + v.trim() + '</string>') }
+function str(v) { return line('<string>' + v.trim() + '</string>') } // TODO proper indent for multiline values
 function val(v) { return line(typeof v === 'boolean' ? (v ? '<true/>' : '<false/>') : '<string><![CDATA[' + v.trim() + ']]></string>') }
-function arr(v, f) { var d='',j=0,jL=v.length; i++; for(;j<jL;j++) d += (f || val)(v[j]); i--; return line('<array>') + d + line('</array>') }
+function arr(v, f) { var d='',j=0; i++; for(;j<v.length;j++){d += (f || val)(v[j])} i--; return line('<array>') + d + line('</array>') }
 function obj(o) {
 	var k, v, d = ''
 	i++
@@ -19,7 +19,7 @@ function obj(o) {
 	{
 		v = o[k]
 		d += key(k)
-		if(k === 'BBEditDocumentType') d += str(v) + key('com.barebones.DocumentType') + str(v)
+ 		if(k === 'BBEditDocumentType') d += str(v) //+ key('com.barebones.DocumentType') + str(v)
 		else if(k === 'BBLMSuffixMap') d += arr(v, function(e){ return obj({'BBLMLanguageSuffix': e}) })
 		else d += v instanceof Array ? arr(v) : typeof v === 'object' ? obj(v) : val(v)
 	}

@@ -7,6 +7,7 @@ BBLMColorsSyntax   : true
 BBLMIsCaseSensitive: false
 BBLMScansFunctions : true
 BBLMSupportsTextCompletion: true
+BBLMCommentLineDefault: '/'
 Language Features:
   Comment Pattern: |
     (?x:

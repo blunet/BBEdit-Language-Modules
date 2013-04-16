@@ -58,4 +58,4 @@ Language Features:
         	(?P=delim)
         )
     )
-  Function Pattern: '(?sx:^\s*(?P<function>(?P<function_name>[a-zA-Z0-9_@]+)\W*(=|:)\W*(\([a-zA-Z0-9_, ]+\))?\W*(\-\>|\=\>)\W*))'
+  Function Pattern: '(?sx:^\s*(?P<function>(?P<function_name>[a-zA-Z0-9_@]+)\W*(=|:)\W*(\([a-zA-Z0-9_, ]+\))?\W*(->|=>)\W*))'

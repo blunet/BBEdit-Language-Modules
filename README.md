@@ -16,7 +16,7 @@
 ## Hints
 
 - Install nodejs via [homebrew](https://github.com/mxcl/homebrew)
-- If you cannot find the library, go to the finder Go menu and hold the Option key.
+- If you cannot find the library folder, go to the finder Go menu and hold the Option key.
 - Add additional suffix mappings in BBEdit via Preferences > Languages
 
 ## More
