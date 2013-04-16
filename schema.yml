@@ -6,16 +6,6 @@ type       : object
 required   : [BBEditDocumentType, BBLMLanguageCode, BBLMLanguageDisplayName, BBLMColorsSyntax, Language Features]
 oneOf: [{required: [BBLMCommentLineDefault]},{required: [BBLMCommentPrefixDefault]}]
 dependencies: {BBLMCommentPrefixDefault: [BBLMCommentSuffixDefault]}
-#dependencies: [BBEditDocumentType, BBLMLanguageCode, BBLMLanguageDisplayName, BBLMColorsSyntax, Language Features]
-#dependencies:
-#    $this                   : [BBEditDocumentType, BBLMLanguageCode, BBLMLanguageDisplayName, BBLMColorsSyntax, Language Features]
-#    BBLMCommentPrefixDefault: [BBLMCommentSuffixDefault]
-#
-#dependencies:
-#    allOf:
-#      - $this                   : [BBEditDocumentType, BBLMLanguageCode, BBLMLanguageDisplayName, BBLMColorsSyntax, Language Features]
-#        BBLMCommentPrefixDefault: [BBLMCommentSuffixDefault]
-#    oneOf: {$this: [BBLMCommentLineDefault, BBLMCommentPrefixDefault]}
 additionalProperties: false
 properties:
     # identification
