@@ -1,0 +1,81 @@
+# Copyright (C) 2013 Claude Nobs, GPL 3.0
+---
+$schema    : http://json-schema.org/draft-04/schema#
+title      : BBEdit Codeless Language Module Schema
+type       : object
+required   : [BBEditDocumentType, BBLMLanguageCode, BBLMLanguageDisplayName, BBLMColorsSyntax, Language Features]
+oneOf: [{required: [BBLMCommentLineDefault]},{required: [BBLMCommentPrefixDefault]}]
+dependencies: {BBLMCommentPrefixDefault: [BBLMCommentSuffixDefault]}
+#dependencies: [BBEditDocumentType, BBLMLanguageCode, BBLMLanguageDisplayName, BBLMColorsSyntax, Language Features]
+#dependencies:
+#    $this                   : [BBEditDocumentType, BBLMLanguageCode, BBLMLanguageDisplayName, BBLMColorsSyntax, Language Features]
+#    BBLMCommentPrefixDefault: [BBLMCommentSuffixDefault]
+#
+#dependencies:
+#    allOf:
+#      - $this                   : [BBEditDocumentType, BBLMLanguageCode, BBLMLanguageDisplayName, BBLMColorsSyntax, Language Features]
+#        BBLMCommentPrefixDefault: [BBLMCommentSuffixDefault]
+#    oneOf: {$this: [BBLMCommentLineDefault, BBLMCommentPrefixDefault]}
+additionalProperties: false
+properties:
+    # identification
+    BBEditDocumentType            : {enum: [CodelessLanguageModule]}
+    BBLMLanguageCode              : {type: string, pattern: '^.{4}$'} # must be 4 chars
+    BBLMLanguageDisplayName       : {type: string, minLength: 1}
+    # file mapping
+    BBLMSuffixMap                 : {type: array, items: {type: string, pattern: '^[.].+$'}, minItems: 1, uniqueItems: true}
+    BBLMFileNamesToMatch          : {type: array, items: {type: string, minLength: 1}, minItems: 1, uniqueItems: true}
+    BBLMPreferredFilenameExtension: {type: string, pattern: '^[^.].+$'}
+    # services
+    BBLMSupportsTextCompletion    : {type: boolean}
+    BBLMCanSpellCheckCodeRuns     : {type: boolean}
+    BBLMReferenceSearchURLTemplate: {type: string, minLength: 1, format: uri} #pattern?
+    BBLMIsCaseSensitive           : {type: boolean}
+    BBLMScansFunctions            : {type: boolean}
+    # coloring
+    BBLMColorsSyntax          : {type: boolean}
+    BBLMKeywordList           : {type: array, items: {type: string, minLength: 1}, minItems: 1, uniqueItems: true}
+    BBLMPredefinedNameList    : {type: array, items: {type: string, minLength: 1}, minItems: 1, uniqueItems: true}
+    # commenting
+    BBLMCommentLineDefault    : {type: string, minLength: 1}
+    BBLMCommentPrefixDefault  : {type: string, minLength: 1}
+    BBLMCommentSuffixDefault  : {type: string, minLength: 1} # required if above present
+    # language features
+    Language Features:
+        type: object
+        additionalProperties: false
+        dependencies: {Open Block Comments: [Close Block Comments], Open Strings 1: [Close Strings 1], 
+                       Open Strings 2: [Close Strings 2], Open Parameter Lists: [Close Parameter Lists], 
+                       Open Statement Blocks: [Close Statement Blocks]}
+        oneOf:
+          - properties: &IKC  {Identifier and Keyword Characters     : {type: string, minLength: 1}}
+            required  : [Identifier and Keyword Characters]
+          - properties: &IKCC {Identifier and Keyword Character Class: {type: string, minLength: 1}}
+            required  : [Identifier and Keyword Character Class]
+        properties:
+            << : [*IKC, *IKCC]
+            # string patterns
+            Open Block Comments        : {type: string, minLength: 1}
+            Close Block Comments       : {type: string, minLength: 1} # required if above present
+            Open Line Comments         : {type: string, minLength: 1}
+            Open Strings 1             : {type: string, minLength: 1}
+            Close Strings 1            : {type: string, minLength: 1} # required if above present
+            Open Strings 2             : {type: string, minLength: 1}
+            Close Strings 2            : {type: string, minLength: 1} # required if above present
+            Escape Char in Strings 1   : {type: string, pattern: '^.{1}$'}
+            Escape Char in Strings 2   : {type: string, pattern: '^.{1}$'}
+            End-of-line Ends Strings 1 : {type: boolean}
+            End-of-line Ends Strings 2 : {type: boolean}
+            Prefix for Functions       : {type: string, minLength: 1}
+            Prefix for Procedures      : {type: string, minLength: 1}
+            Open Parameter Lists       : {type: string, minLength: 1}
+            Close Parameter Lists      : {type: string, minLength: 1} # required if above present
+            Terminator for Prototypes 1: {type: string, minLength: 1}
+            Terminator for Prototypes 2: {type: string, minLength: 1}
+            Open Statement Blocks      : {type: string, minLength: 1}
+            Close Statement Blocks     : {type: string, minLength: 1} # required if above present
+            # regex patterns
+            Comment Pattern : {type: string, minLength: 1}
+            String Pattern  : {type: string, minLength: 1}
+            Function Pattern: {type: string, minLength: 1}
+            Skip Pattern    : {type: string, minLength: 1}

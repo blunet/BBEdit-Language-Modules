@@ -5,6 +5,7 @@
 
 var fs   = require('fs')
 var yaml = require('js-yaml')
+var jsv  = (function(){ var JaySchema = require('jayschema'); return new JaySchema() })()
 
 var i = 0
 function line(s) { return Array(i+1).join('  ') + s + '\n' }
@@ -26,7 +27,7 @@ function obj(o) {
 	i--
 	return line('<dict>') + d + line('</dict>')
 }
-function doc(yml) {
+function xml(yml) {
 	return '<?xml version="1.0" encoding="UTF-8"?>\n'
 	     + '<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">\n'
 	     + '<plist version="1.0">\n'
@@ -36,9 +37,15 @@ function doc(yml) {
 
 var path  = __dirname + '/'
 var bPath = path + 'build/'
-var regex = /\.ya?ml$/
+var regex = /^(?!schema)(.+)\.ya?ml$/
 var files = fs.readdirSync(path).filter(function(e){ return regex.test(e) })
+var schema = require(path + 'schema.yml')
 
-try{ fs.mkdirSync(bPath) } catch(e) { if(e.errno !== 47) throw e }
+try{ fs.mkdirSync( bPath) } catch(e) { if(e.errno !== 47) throw e }
 
-files.forEach(function(e){ fs.writeFileSync(bPath + e.replace(regex, '.plist'), doc(require(path + e))) });
+files.forEach(function(e){
+	var doc = require(path + e)
+	jsv.validate(doc, schema,function(errs){ if(errs) { console.error(e, errs) } else {
+		fs.writeFileSync(bPath + e.replace(regex, function($0,$1){ return $1 + '.plist'}), xml(doc))
+	}})
+});

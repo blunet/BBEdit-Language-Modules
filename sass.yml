@@ -326,25 +326,22 @@ Language Features:
     )
   Function Pattern: |
     (?x:
-    	(?P<function_name>
-    		@mixin\s[\w-?_?]+(\(.+\))?
-    		| @include\s[\w-?_?]+(\(.+\))?
-    		| =[\w-?_?]+(\(.+\))?
-    		| \+[\w-?_?]+(\(.+\))?
-    		| \.[\w-?_?]+
-    		| \#[\w-?_?]+
+    	(?P<function>
+    		(?P<leadspace>^[ \t]*)
+    		@mixin[ \t]+ 
+    		(?P<function_name>[a-zA-Z_][a-zA-Z0-9_-]+)[ \t]*
+    		(
+    			\n(?P=leadspace)(?P<innerspace>[ \t]+).+
+    			(\n(?P=leadspace)(?P=innerspace).+)*
+    		)?
     	)
     )
-  Open Statement Blocks: '{'
-  Close Statement Blocks: '}'
-  Identifier and Keyword Character Class: a-zA-Z0-9_%.+$@#-^=
   String Pattern: |
     (?x:
     	(?P<string_double>".+?") | (?P<string_single>'.+?')
     )
   Skip Pattern: |
     (?x:
-    	(?>
-    		(?P>comment) | (?P>string)
-    	)
+    	(?> (?P>comment) | (?P>string) )
     )
+  Identifier and Keyword Character Class: a-zA-Z0-9_%.+$@#-^=

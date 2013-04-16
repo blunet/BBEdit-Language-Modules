@@ -7,6 +7,7 @@
 
 - [nodejs](http://nodejs.org/)
 - [js-yaml](https://github.com/nodeca/js-yaml)
+- [JaySchema](https://github.com/natesilva/jayschema)
 
 ## Usage
 
